@@ -133,7 +133,29 @@ function removeContainer() {
   if (existing) existing.remove();
 }
 
+function ensureMobileStyles() {
+  if (document.getElementById("hltb-mobile-style")) return;
+  const style = document.createElement("style");
+  style.id = "hltb-mobile-style";
+  style.textContent = `
+    @media (max-width: 700px) {
+      #${CONTAINER_ID} {
+        flex-wrap: wrap;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        gap: 8px 16px;
+      }
+      #${CONTAINER_ID} * {
+        overflow-wrap: anywhere;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
 function createContainer() {
+  ensureMobileStyles();
   const el = document.createElement("div");
   el.id = CONTAINER_ID;
   el.style.cssText = STYLES.container;
