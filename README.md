@@ -41,9 +41,7 @@ HLTB data on Epic Free Games:
 
 ## Android [Firefox]
 
-- Download file:
-
-  Download the .xpi from the [Releases](https://github.com/alphaxleonidas/Epic-HLTB/releases) section.
+- Download the .xpi from the [Releases](https://github.com/alphaxleonidas/Epic-HLTB/releases) section.
 
 - Enable debug menu:
   
