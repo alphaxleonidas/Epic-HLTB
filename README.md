@@ -13,4 +13,4 @@ Desktop Version:
 
 
 Mobile Version:
-<img width="859" height="1800" alt="image" src="https://github.com/user-attachments/assets/64335b5c-1fef-4427-8fd7-885c5bb6740c" />
+<img width="50%" height="auto" alt="image" src="https://github.com/user-attachments/assets/64335b5c-1fef-4427-8fd7-885c5bb6740c" />
