@@ -8,11 +8,17 @@ HLTB data on Epic Free Games:
 
 [Chronological List with scores](https://josephmate.github.io/EpicFreeGamesList/)
 
-Desktop Version:
-<img width="1586" height="774" alt="image" src="https://github.com/user-attachments/assets/5a46e5e2-5207-4024-a0a5-d27691f62a15" />
 
 
-Mobile Version:
-
-
-<img width="50%" height="50%" alt="image" src="https://github.com/user-attachments/assets/64335b5c-1fef-4427-8fd7-885c5bb6740c" />
+<p float="left">
+  <img
+    src="https://github.com/user-attachments/assets/5a46e5e2-5207-4024-a0a5-d27691f62a15"
+    alt="Desktop version"
+    height="300"
+  />
+  <img
+    src="https://github.com/user-attachments/assets/64335b5c-1fef-4427-8fd7-885c5bb6740c"
+    alt="Mobile version"
+    height="300"
+  />
+</p>
