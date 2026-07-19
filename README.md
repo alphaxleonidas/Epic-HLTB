@@ -22,3 +22,45 @@ HLTB data on Epic Free Games:
     height="300"
   />
 </p>
+
+
+
+# For local installation: 
+
+## Firefox:
+
+- Download the xpi version from the [releases](https://github.com/alphaxleonidas/Epic-HLTB/releases).
+
+- Go to `about:addons` in your browser URL.
+
+- Click on the gear icon <img width="25" height="25" alt="image" src="https://github.com/user-attachments/assets/ca42ecea-0f72-48e5-b96a-0010135f8f63" />  and choose ` Install Add-on from file`.
+
+- Select the xpi file. 
+
+- The extension should work permanently. 
+
+## Android [Firefox]
+
+- Download file:
+
+  Download the .xpi from the [Releases](https://github.com/alphaxleonidas/Epic-HLTB/releases) section.
+
+- Enable debug menu:
+  
+  Open Firefox > Settings > About Firefox. Click on the Firefox logo 5 times > Enables Debug menu. 
+
+- Disable signatures for extensions:[only needed if the file is unsigned]
+
+  Go to a new tab. Type this in the URL: `about:config`. 
+
+  Search `xpinstall.signatures.required` and toggle it to false. 
+
+- Permananently Reveal Debug Menu:
+
+  Go to settings page. Scroll down to `Secret Settings`. Enable `Keep Debug Menu revealed`.
+
+- Install Extension:
+
+  Go back to settings page. Scroll down and select `Install Extension from file`. Select the .xpi file.
+
+- Now the extension should work permanently.
