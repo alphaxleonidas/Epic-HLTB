@@ -9,6 +9,12 @@ HLTB data on Epic Free Games:
 [Chronological List with scores](https://josephmate.github.io/EpicFreeGamesList/)
 
 
+## Download & Install
+
+<a href="https://addons.mozilla.org/en-US/firefox/addon/epic-games-hltb/"><img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" alt='Get the Extension on Firefox' height="75"></a>
+
+## Screenshots
+
 
 <p float="left">
   <img
