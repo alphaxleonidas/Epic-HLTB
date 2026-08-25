@@ -65,18 +65,29 @@ function getGameNameOnce() {
 // Epic's store is a single-page app: navigating between games updates the URL
 // via the History API without a real page load, so the title/meta tags for
 // the new game aren't necessarily in the DOM the instant the URL changes.
-// Poll briefly for them instead of checking exactly once.
-function waitForGameName(timeoutMs = 8000, intervalMs = 250) {
+// Poll briefly for them instead of checking exactly once. `staleName` is the
+// previously-resolved game's name — if the DOM still shows that name (because
+// the SPA hasn't re-rendered yet), keep polling instead of accepting it,
+// unless it also matches the new URL's slug (a legitimate same-name case).
+function waitForGameName(timeoutMs = 8000, intervalMs = 250, staleName = null) {
+  const urlSlugName = getGameNameFromUrl();
   return new Promise((resolve) => {
     const start = Date.now();
     const tick = () => {
       const name = getGameNameOnce();
-      if (name) {
+      const isStale =
+        staleName &&
+        name &&
+        name.toLowerCase() === staleName.toLowerCase() &&
+        !(urlSlugName && name.toLowerCase() === urlSlugName.toLowerCase());
+      if (name && !isStale) {
         resolve(name);
         return;
       }
       if (Date.now() - start >= timeoutMs) {
-        resolve(null);
+        // Give up waiting for a fresh title; accept whatever we have (even a
+        // possibly-stale name) rather than showing nothing at all.
+        resolve(name || null);
         return;
       }
       setTimeout(tick, intervalMs);
@@ -92,13 +103,8 @@ const STYLES = {
   container: `
     background: linear-gradient(135deg, #0f0f10 0%, #202024 100%);
     border-bottom: 2px solid #ffffff;
-    padding: 12px 20px;
     font-family: Arial, sans-serif;
     color: #e6e6e6;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
     position: relative;
     z-index: 1000;
   `,
@@ -106,11 +112,13 @@ const STYLES = {
     color: #ffffff;
     text-decoration: none;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 16px;
   `,
   separator: `
+    display: inline-block;
+    width: 8px;
+    text-align: center;
     color: #4a4a4a;
-    margin: 0 8px;
   `,
   error: `
     font-size: 14px;
@@ -133,11 +141,19 @@ function removeContainer() {
   if (existing) existing.remove();
 }
 
-function ensureMobileStyles() {
+function ensureContainerStyles() {
   if (document.getElementById("hltb-mobile-style")) return;
   const style = document.createElement("style");
   style.id = "hltb-mobile-style";
   style.textContent = `
+    #${CONTAINER_ID} {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 26px;
+      padding: 12px 26px;
+      box-sizing: border-box;
+    }
     @media (max-width: 700px) {
       #${CONTAINER_ID} {
         flex-wrap: wrap;
@@ -155,7 +171,7 @@ function ensureMobileStyles() {
 }
 
 function createContainer() {
-  ensureMobileStyles();
+  ensureContainerStyles();
   const el = document.createElement("div");
   el.id = CONTAINER_ID;
   el.style.cssText = STYLES.container;
@@ -250,20 +266,25 @@ function showResult(el, game) {
 }
 
 let currentRunId = 0;
+let lastResolvedName = null;
 
 async function runForCurrentPage() {
   const runId = ++currentRunId;
   removeContainer();
 
-  if (!isProductPage(location.pathname)) return;
+  if (!isProductPage(location.pathname)) {
+    lastResolvedName = null;
+    return;
+  }
 
-  const name = await waitForGameName();
+  const name = await waitForGameName(8000, 250, lastResolvedName);
 
   // Bail if the user navigated again while we were waiting, or if a newer
   // run has already started (avoids painting a stale/wrong game's result).
   if (runId !== currentRunId) return;
   if (!name || !isProductPage(location.pathname)) return;
 
+  lastResolvedName = name;
   const container = createContainer();
   showSearching(container, name);
 

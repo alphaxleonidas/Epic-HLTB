@@ -17,6 +17,13 @@ function searchUrl(name) {
   } catch (_) {
     // Not a valid percent-encoded sequence - use the name as-is.
   }
+
+  // Strip trademark/registered/copyright/service-mark symbols - store listings
+  // often carry these (e.g. "Monopoly: Star Wars™ Heroes vs. Villains") but
+  // HLTB's own entries almost never do, so leaving them in can prevent an
+  // otherwise-exact title from matching.
+  clean = clean.replace(/[®™©℠]/g, "").replace(/\s{2,}/g, " ").trim();
+
   return `${HLTB_BASE}/?q=${encodeURIComponent(clean)}`;
 }
 
